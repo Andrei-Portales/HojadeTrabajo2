@@ -63,6 +63,7 @@ public class Calculadora {
 				resultado = resultado / Integer.parseInt(datos[i]);
 			}
 			break;
+			
 		}
 		return resultado;
 	}
