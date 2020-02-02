@@ -5,10 +5,11 @@ public class Calculator implements ICalculator {
 	}
 	
 	@Override
-	public void fillStack(String text, IStack<String> expresion) {
-		for (int i = 0; i <text.length(); i++ )
+	public void fillStack(String[] text, IStack<String> expresion) {
+		
+		for (int i = 0; i <text.length; i++ )
 		 {
-			 expresion.push(Character.toString(text.charAt(i)));
+			 expresion.push(text[i]);
 		 }
 	}
 
