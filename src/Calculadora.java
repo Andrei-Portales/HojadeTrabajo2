@@ -21,17 +21,7 @@ public class Calculadora {
 		}
 	}
 	
-	public String getResult() {
-		String retorno = "";
-		
-		if (expresion != null) {
-			retorno = expresion;
-		}else {
-			retorno = "No hay ninguna expresion";
-		}
-		
-		return retorno;
-	}
+	
 	
 	
 	public Integer operar(String operador,String[] datos) {
@@ -68,6 +58,18 @@ public class Calculadora {
 		return resultado;
 	}
 	
+	
+	public void fillStacks() {
+		
+	}
+	
+	public void duOperation() {
+		
+	}
+	
+	public String getResult() {
+		return "";
+	}
 	
 	
 	
