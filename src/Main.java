@@ -64,8 +64,8 @@ public class Main {
 			public void actionPerformed(ActionEvent e) {
 				try {
 					String cadena = ArchivoTXT.leerTXT(ArchivoTXT.getPath());
-					calculadora.fillStack(cadena, expresion);
-					calculadora.doOperation(expresion);
+					calculadora.fillStack(cadena);
+					calculadora.doOperation();
 					
 					JOptionPane.showMessageDialog(null, "Se leyo el archivo con exito");
 				}catch (Exception ex) {

@@ -1,118 +1,59 @@
 public class Calculator implements ICalculator {
 	
-	protected int result;
-	IStack<String> exp_tmp = new StackVector<String>();
+	//protected int result;
+	protected String[] entrada;
+	
 	IStack<String> data_result = new StackVector<String>();
+	
 	
 	public Calculator () {
 	}
 	
 	@Override
-	public void fillStack(String text, IStack<String> expresion) {
-		String[] ts; 
-		ts = text.split(" ");
-		for (int i = 0; i < ts.length; i++ )
-		 {
-			exp_tmp.push(ts[i]);
-		 }
-		
-		int c = exp_tmp.size();
-		for (int j = 0; j < c; j++) 
-		{
-			expresion.push(exp_tmp.pop());
-		}
+	public void fillStack(String text) {
+		entrada = text.split(" ");
 	}
 
 	@Override
-	public void doOperation(IStack<String> expresion) {
+	public void doOperation() {
 		
-		int size = 0;
-		size = expresion.size(); 
-		
-		do {
-			calculator(expresion);
-			
-			clean_stack(expresion);
-			
-			clean_stack(exp_tmp);
-			
-			//se copia y ordena
-			if(!data_result.empty()) {
-				int c = data_result.size();
-				for (int j = 0; j < c; j++) 
-				{
-					expresion.push(data_result.pop());
-				}
+		for (int i = 0; i < entrada.length; i++ )
+		{
+			if (isOperator(entrada[i])){
+				
+				int r = 0, n1= 0, n2 = 0; 
+				n1 = Integer.parseInt(data_result.pop());
+				n2 = Integer.parseInt(data_result.pop());
+				r = operation(entrada[i], n1, n2);
+				data_result.push(Integer.toString(r));
+				
+			}else 
+			{
+				data_result.push(entrada[i]);
 			}
-			
-			//System.out.println("expresion ->");
-			//print_vector(expresion);
-			
-			clean_stack(data_result);
-			
-			size = expresion.size();
-			
-		} while (size > 1);
-			
-		result = Integer.parseInt(expresion.pop()) ;
+		}		
+	
 	}
 
 	@Override
 	public int getResult() {
+		//print_vector(data_result);
+		int result = 0;
+		if (data_result.size() == 1) {
+			result = Integer.parseInt(data_result.pop());
+		} 
+			
 		return result;
 	}
 	
-	private void clean_stack(IStack<String> expresion) {
-		if(!expresion.empty()) {
-			for (int i = 0; i < expresion.size() -1 ; i++ )
-			{
-				expresion.pop();
-			}
-		}
+	private boolean isOperator(String op) {
+		if (op.equals("+") || op.equals("-") || op.equals("*") || op.equals("/") ) 
+			return true;
+		else 
+			return false;
 	}
 	
-	private void calculator(IStack<String> expresion) {
-		String current ="";
-		int count = 0;
-		boolean continua = true;
-		
-		while (expresion.size() > 0) {
-			current = expresion.pop();
-			
-			if (continua == true) {
-				switch (current) {
-				case "+":
-					operation("suma",count);
-					count = 0;
-					continua = false;
-					break;
-				case "-":
-					operation("resta",count);
-					count = 0;
-					continua = false;
-					break;
-				case "*":
-					operation("multiplica",count);
-					count = 0;
-					continua = false;
-					break;
-				case "/":
-					operation("divide",count);
-					count = 0;
-					continua = false;
-					break;
-				default: 
-					count ++;
-					data_result.push(current);
-					break;
-				}
-			} else {
-				data_result.push(current);
-			}
-		}
-	}
-	
-	private void print_vector(IStack<String> expresion) {
+	/*private void print_vector(IStack<String> expresion) {
 		int z;
 		z = expresion.size();
 		System.out.println("z " + z);
@@ -121,58 +62,28 @@ public class Calculator implements ICalculator {
 			String algo = expresion.pop();
 			System.out.println(algo);
 		}
-	}
+	}*/
 	
-	private void operation(String operator, int x) {
-		int operation = 0, n1 = 0, n2 = 0;
+	private int operation(String operator, int n1, int n2) {
 		
-		if (operator == "suma") {
-			n1 = Integer.parseInt(data_result.pop());
-			n2 = Integer.parseInt(data_result.pop());
-			operation = n1 + n2;
-			
-			data_result.push(Integer.toString(operation));
-
-			if (x > 2) {
-				data_result.push("+");
-			}
+		int result = 0;
+		
+		if (operator.equals("+")) {
+			result = n1 + n2;
 		}
 		
-		if (operator == "resta") {
-			n1 = Integer.parseInt(data_result.pop());
-			n2 = Integer.parseInt(data_result.pop());
-			operation = n2 - n1;
-			
-			data_result.push(Integer.toString(operation));
-			
-			if (x > 2) {
-				data_result.push("-");
-			}
+		if (operator.equals("-")) {
+			result = n2 - n1;
 		}
 		
-		if (operator == "multiplica") {
-			n1 = Integer.parseInt(data_result.pop());
-			n2 = Integer.parseInt(data_result.pop());
-			operation = n1 * n2;
-			
-			data_result.push(Integer.toString(operation));
-			
-			if (x > 2) {
-				data_result.push("*");
-			}
+		if (operator.equals("*")) {
+			result = n1 * n2;
 		}
 		
-		if (operator == "divide") {
-			n1 = Integer.parseInt(data_result.pop());
-			n2 = Integer.parseInt(data_result.pop());
-			operation = n1 * n2;
-			
-			data_result.push(Integer.toString(operation));
-			
-			if (x > 2) {
-				data_result.push("*");
-			}
+		if (operator.equals("/")) {
+			result = n1 * n2;
 		}
-	
+		
+		return result;
 	}
 }
