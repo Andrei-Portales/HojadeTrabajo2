@@ -1,5 +1,6 @@
-
 public class Calculator implements ICalculator {
+	
+	protected int result;
 	
 	public Calculator () {
 	}
@@ -15,15 +16,62 @@ public class Calculator implements ICalculator {
 	}
 
 	@Override
-	public void doOperation() {
-		// TODO Auto-generated method stub
+	public void doOperation(IStack<String> expresion) {
+		String current ="", operator=""; 
+		
+		while (!expresion.empty()) {
+			current = expresion.pop();
+			switch (current) {
+			case "+":
+				operator = "suma";
+				break;
+			case "-":
+				operator = "resta";
+				break;
+			case "*":
+				operator = "multiplica";
+				break;
+			case "/":
+				operator = "divide";
+				break;
+			default: 
+				result = operation(Integer.parseInt(current), result, operator);
+				//expresion.pop();
+				break;
+			}
+		}
 
 	}
 
 	@Override
-	public void getResult(IStack<String> expresion) {
+	public int getResult() {
 		// TODO Auto-generated method stub
-
+		return result;
 	}
-
+	
+	private int operation(int n, int result, String operator) {
+		int operation = 0;
+		//System.out.println(operator == "suma");	
+		if (operator == "suma") {
+			operation = result + n;
+			//System.out.println(n + " + " + result);
+		}
+		
+		if (operator == "resta") {
+			operation = result - n;
+			//System.out.println(n + " - " + result);
+		}
+		
+		if (operator == "multiplica") {
+			operation = result * n;
+			//System.out.println(n + " * " + result);
+		}
+		
+		if (operator == "divide") {
+			operation = result / n;
+			//System.out.println(n + " / " + result);
+		}
+	
+		return operation;
+	}
 }
