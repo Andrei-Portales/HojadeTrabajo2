@@ -45,8 +45,8 @@ public class Calculator implements ICalculator {
 				}
 			}
 			
-			System.out.println("expresion ->");
-			print_vector(expresion);
+			//System.out.println("expresion ->");
+			//print_vector(expresion);
 			
 			clean_stack(data_result);
 			
