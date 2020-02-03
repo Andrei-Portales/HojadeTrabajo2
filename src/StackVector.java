@@ -13,7 +13,9 @@ public class StackVector<E> implements IStack<E> {
 	// post: item is added to stack
 	// will be popped next if no intervening push
 	{
+		//Collections.reverse(data);
 		data.add(item);
+		//Collections.reverse(data);
 	}
 	   
 	   
@@ -42,6 +44,6 @@ public class StackVector<E> implements IStack<E> {
    //post: returns the number of elements in the stack
    {
 	   return data.size();
-   }	
-       
+   }
+   
 }
