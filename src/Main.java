@@ -16,9 +16,11 @@ import java.awt.event.ActionEvent;
 public class Main {
 
 	private JFrame frame;
-	private Calculadora calc;
 	private JLabel lblResultado; 
-
+	//Se crea una pila
+	private IStack<String> expresion; 
+			//Se crea una calculadora
+	private ICalculator calculadora; 
 	/**
 	 * Launch the application.
 	 */
@@ -46,7 +48,8 @@ public class Main {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
-		calc = new Calculadora();
+		expresion = new StackVector<String>();
+		calculadora = new Calculator();
 		frame = new JFrame();
 		frame.getContentPane().setBackground(Color.WHITE);
 		frame.getContentPane().setLayout(new CardLayout(0, 0));
@@ -60,7 +63,10 @@ public class Main {
 		btnElegirArchivo.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
-					calc.getPath();
+					String cadena = ArchivoTXT.leerTXT(ArchivoTXT.getPath());
+					calculadora.fillStack(cadena, expresion);
+					calculadora.doOperation(expresion);
+					
 					JOptionPane.showMessageDialog(null, "Se leyo el archivo con exito");
 				}catch (Exception ex) {
 					JOptionPane.showMessageDialog(null, "Hubo un error leyendo el archivo");
@@ -74,7 +80,7 @@ public class Main {
 		JButton btnMostrarResultado = new JButton("Mostrar Resultado");
 		btnMostrarResultado.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				lblResultado.setText("Resultado: " + calc.getResult());
+				lblResultado.setText("Resultado: " + calculadora.getResult());
 			}
 		});
 		btnMostrarResultado.setBounds(138, 138, 151, 29);
