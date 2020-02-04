@@ -1,6 +1,5 @@
 public class Calculator implements ICalculator {
 	
-	//protected int result;
 	protected String[] entrada;
 	
 	IStack<String> data_result = new StackVector<String>();
@@ -81,7 +80,7 @@ public class Calculator implements ICalculator {
 		}
 		
 		if (operator.equals("/")) {
-			result = n1 * n2;
+			result = n2 / n1;
 		}
 		
 		return result;
