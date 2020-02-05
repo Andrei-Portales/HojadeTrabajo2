@@ -1,5 +1,5 @@
 public class Calculator implements ICalculator {
-	//variable para almacenar la expresión de entrada
+	//variable para almacenar la expresiï¿½n de entrada
 	protected String[] entrada;
 	//se crea la pila
 	IStack<String> data_result = new StackVector<String>();
@@ -10,23 +10,23 @@ public class Calculator implements ICalculator {
 	
 	@Override
 	public void fillStack(String text) {
-		//prepara la expresión para ser analizada
+		//prepara la expresiï¿½n para ser analizada
 		entrada = text.split(" ");
 	}
 
 	@Override
 	public void doOperation() {
-		//recorre toda la expresión
+		//recorre toda la expresiï¿½n
 		for (int i = 0; i < entrada.length; i++ )
 		{
-			//¿es operador o numero?
+			//ï¿½es operador o numero?
 			if (isOperator(entrada[i])){
 				//si es operador se retiran dos elementos de la pila y se operan
 				int r = 0, n1= 0, n2 = 0; 
 				n1 = Integer.parseInt(data_result.pop());
 				n2 = Integer.parseInt(data_result.pop());
 				r = operation(entrada[i], n1, n2);
-				//se ingresa el resultado de la operación en la pila
+				//se ingresa el resultado de la operaciï¿½n en la pila
 				data_result.push(Integer.toString(r));
 				
 			}else 
@@ -43,7 +43,7 @@ public class Calculator implements ICalculator {
 		//print_vector(data_result);
 		int result = 0;
 		
-		//se retorna el ultimo elemento que quedó en la pila que es el resultado
+		//se retorna el ultimo elemento que quedï¿½ en la pila que es el resultado
 		//si hay mas elementos se retorna 0 porque no se pudo operar.
 		if (data_result.size() == 1) {
 			result = Integer.parseInt(data_result.pop());
@@ -53,12 +53,26 @@ public class Calculator implements ICalculator {
 	}
 	
 	private boolean isOperator(String op) {
-		//se comprueba si es un operador o un numero
+		//se comprueba si es un operador
 		if (op.equals("+") || op.equals("-") || op.equals("*") || op.equals("/") ) 
 			return true;
 		else 
 			return false;
 	}
+	
+	private boolean isNumeric(String op) {
+		//se comprueba si es un numero
+		boolean numeric = false;
+		try {
+			Double num = Double.parseDouble(op);
+			numeric = true;
+        } catch (NumberFormatException e) {
+            numeric = false;
+        }
+		return numeric;
+	}
+	
+	
 	
 	/*private void print_vector(IStack<String> expresion) {
 		int z;
@@ -85,12 +99,12 @@ public class Calculator implements ICalculator {
 			result = n2 - n1;
 		}
 		
-		//multiplicación
+		//multiplicaciï¿½n
 		if (operator.equals("*")) {
 			result = n1 * n2;
 		}
 		
-		//división
+		//divisiï¿½n
 		if (operator.equals("/")) {
 			result = n2 / n1;
 		}
