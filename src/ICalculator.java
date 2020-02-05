@@ -6,11 +6,11 @@ public interface ICalculator {
 
 	
 	public void doOperation(); 
-	// pre: se ingresó el texto de entrada
-    // post: la pila tiene el resultado de la operación
+	// pre: se ingresÃ³ el texto de entrada
+    // post: la pila tiene el resultado de la operaciÃ³n
 	
-	public int getResult();
-	// pre: se realizó la operación 
+	public String getResult();
+	// pre: se realizÃ³ la operaciÃ³n 
     // post: retorna el resultado 
     	
 }

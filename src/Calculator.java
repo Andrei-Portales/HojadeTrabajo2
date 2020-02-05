@@ -1,5 +1,5 @@
 public class Calculator implements ICalculator {
-	//variable para almacenar la expresi�n de entrada
+	//variable para almacenar la expresión de entrada
 	protected String[] entrada;
 	//se crea la pila
 	IStack<String> data_result = new StackVector<String>();
@@ -10,44 +10,60 @@ public class Calculator implements ICalculator {
 	
 	@Override
 	public void fillStack(String text) {
-		//prepara la expresi�n para ser analizada
+		//prepara la expresión para ser analizada
 		entrada = text.split(" ");
 	}
 
 	@Override
 	public void doOperation() {
-		//recorre toda la expresi�n
-		for (int i = 0; i < entrada.length; i++ )
-		{
-			//�es operador o numero?
-			if (isOperator(entrada[i])){
-				//si es operador se retiran dos elementos de la pila y se operan
-				int r = 0, n1= 0, n2 = 0; 
-				n1 = Integer.parseInt(data_result.pop());
-				n2 = Integer.parseInt(data_result.pop());
-				r = operation(entrada[i], n1, n2);
-				//se ingresa el resultado de la operaci�n en la pila
-				data_result.push(Integer.toString(r));
-				
-			}else 
+		//recorre toda la expresión
+		try {
+			for (int i = 0; i < entrada.length; i++ )
 			{
-				//si es un numero se ingresa a la pila
-				data_result.push(entrada[i]);
+				//¿es operador o numero?
+				if (isOperator(entrada[i])){
+					//si es operador se retiran dos elementos de la pila y se operan
+					double r = 0, n1= 0, n2 = 0; 
+					n1 = Double.parseDouble(data_result.pop());
+					n2 = Double.parseDouble(data_result.pop());
+					r = operation(entrada[i], n1, n2);
+					//se ingresa el resultado de la operación en la pila
+					data_result.push(Double.toString(r));
+					
+				}else if (isNumeric(entrada[i])){
+					//si es un numero se ingresa a la pila
+					data_result.push(entrada[i]);
+				} else 
+				{ 	//se  limpia la pila
+					while (!(data_result.size() == 0)) {
+						data_result.pop();
+		            } 
+					return;
+				}
 			}
-		}		
+        } catch (NumberFormatException e) {
+        	
+            while (!(data_result.size() == 0)) {
+            	data_result.pop();
+            }
+        }
+				
 	
 	}
 
 	@Override
-	public int getResult() {
+	public String getResult() {
 		//print_vector(data_result);
-		int result = 0;
+		String result = "";
 		
-		//se retorna el ultimo elemento que qued� en la pila que es el resultado
+		//se retorna el ultimo elemento que quedó en la pila que es el resultado
 		//si hay mas elementos se retorna 0 porque no se pudo operar.
 		if (data_result.size() == 1) {
-			result = Integer.parseInt(data_result.pop());
-		} 
+			result = data_result.pop();
+		}else 
+		{
+			result = "Error en la operación";
+		}
 			
 		return result;
 	}
@@ -72,22 +88,9 @@ public class Calculator implements ICalculator {
 		return numeric;
 	}
 	
-	
-	
-	/*private void print_vector(IStack<String> expresion) {
-		int z;
-		z = expresion.size();
-		System.out.println("z " + z);
-		for (int i = 0; i < z ; i++ )
-		{
-			String algo = expresion.pop();
-			System.out.println(algo);
-		}
-	}*/
-	
-	private int operation(String operator, int n1, int n2) {
+	private double operation(String operator, double n1, double n2) {
 		
-		int result = 0;
+		double result = 0;
 		
 		//suma
 		if (operator.equals("+")) {
@@ -99,12 +102,12 @@ public class Calculator implements ICalculator {
 			result = n2 - n1;
 		}
 		
-		//multiplicaci�n
+		//multiplicación
 		if (operator.equals("*")) {
 			result = n1 * n2;
 		}
 		
-		//divisi�n
+		//división
 		if (operator.equals("/")) {
 			result = n2 / n1;
 		}
