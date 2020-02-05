@@ -11,16 +11,25 @@ import javax.swing.JOptionPane;
 
 import java.awt.Font;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import java.awt.event.ActionEvent;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
 
 public class Main {
 
 	private JFrame frame;
-	private JLabel lblResultado; 
 	//Se crea una pila
 	private IStack<String> expresion; 
 			//Se crea una calculadora
 	private ICalculator calculadora; 
+	private JScrollPane scrollPane;
+	private JTable tablaResultados;
+	private ArrayList<String> respuestas;
+	private String[] cadena = null;
+	
+	
 	/**
 	 * Launch the application.
 	 */
@@ -48,6 +57,9 @@ public class Main {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
+		
+		respuestas = new ArrayList<String>();
+		
 		expresion = new StackVector<String>();
 		calculadora = new Calculator();
 		frame = new JFrame();
@@ -63,9 +75,15 @@ public class Main {
 		btnElegirArchivo.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
-					String cadena = ArchivoTXT.leerTXT(ArchivoTXT.getPath());
-					calculadora.fillStack(cadena);
-					calculadora.doOperation();
+					cadena = ArchivoTXT.leerTXT(ArchivoTXT.getPath());
+					
+					
+					for (String j: cadena) {
+						calculadora.fillStack(j);
+						calculadora.doOperation();
+						respuestas.add(""+calculadora.getResult());
+						
+					}
 					
 					JOptionPane.showMessageDialog(null, "Se leyo el archivo con exito");
 				}catch (Exception ex) {
@@ -80,16 +98,41 @@ public class Main {
 		JButton btnMostrarResultado = new JButton("Mostrar Resultado");
 		btnMostrarResultado.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				lblResultado.setText("Resultado: " + calculadora.getResult());
+				
+				DefaultTableModel model = new DefaultTableModel();
+				model.setColumnCount(2);
+				model.setColumnIdentifiers(new String[] {"Operacion","Resultado"});
+				model.setRowCount(cadena.length);
+				
+				for (int i = 0;i<= cadena.length  -1;i++) {
+					model.setValueAt(cadena[i], i, 0);
+					model.setValueAt(respuestas.get(i), i, 1);
+				}
+				
+				tablaResultados = new JTable(model);
+				scrollPane.setViewportView(tablaResultados);
+				
+				
 			}
 		});
 		btnMostrarResultado.setBounds(138, 138, 151, 29);
 		panel.add(btnMostrarResultado);
 		
-		lblResultado = new JLabel("Resultado: ");
-		lblResultado.setFont(new Font("Lucida Grande", Font.PLAIN, 20));
-		lblResultado.setBounds(23, 212, 407, 48);
-		panel.add(lblResultado);
+		 scrollPane = new JScrollPane();
+		scrollPane.setBounds(28, 202, 394, 129);
+		panel.add(scrollPane);
+		
+		
+		DefaultTableModel model = new DefaultTableModel();
+		model.setColumnCount(2);
+		model.setColumnIdentifiers(new String[] {"Operacion","Resultado"});
+		
+		tablaResultados = new JTable(model);
+		scrollPane.setViewportView(tablaResultados);
+		
+		JLabel lblResultados = new JLabel("Resultados:");
+		lblResultados.setBounds(28, 174, 95, 16);
+		panel.add(lblResultados);
 		frame.setBounds(100, 100, 451, 374);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}

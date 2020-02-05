@@ -2,7 +2,7 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
-
+import java.util.ArrayList;
 
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
@@ -53,24 +53,32 @@ public class ArchivoTXT {
 	 * Funcion para leer el txt
 	 * @return
 	 */
-	public static String leerTXT(String path) {
+	public static String[] leerTXT(String path) {
 		
 		File archivo = new File(path);
 		FileReader fr;
 		BufferedReader br;
-		String retorno ="";
 		
+		String[] retorno = null;
 		try {
 			
 			fr = new FileReader(archivo);
 			br = new BufferedReader(fr);
 			
-			String linea;
+			ArrayList<String> lineas = new ArrayList<String>();
+			String linea = "";
 			
 			while((linea = br.readLine()) != null) {
-				retorno = linea;
+				lineas.add(linea);
 				
 			}
+			
+			retorno = new String[lineas.size()];
+			
+			for (int i = 0; i<= lineas.size() - 1;i++) {
+				retorno[i] = lineas.get(i);
+			}
+			
 			
 			br.close();
 			fr.close();
