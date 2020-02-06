@@ -145,7 +145,7 @@ public class Main {
 			result = data_result.pop();
 		}else 
 		{
-			result = "Error en la operación";
+			result = "Error en la operacion";
 		}
 			
 		return result;
@@ -159,7 +159,7 @@ public class Main {
 		try {
 			for (int i = 0; i < entrada.length; i++ )
 			{
-				//¿es operador o numero?
+				//es operador o numero?
 				if (isOperator(entrada[i])){
 					//si es operador se retiran dos elementos de la pila y se operan
 					int r = 0, n1= 0, n2 = 0; 
@@ -182,7 +182,7 @@ public class Main {
 					}
 					
 					//r = operation(entrada[i], n1, n2);
-					//se ingresa el resultado de la operación en la pila
+					//se ingresa el resultado de la operacion en la pila
 					data_result.push(Integer.toString(r));
 					
 				}else if (isNumeric(entrada[i])){
