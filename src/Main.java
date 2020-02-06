@@ -193,7 +193,7 @@ public class Main {
 					while (!(data_result.size() == 0)) {
 						data_result.pop();
 		            } 
-					
+					break;
 				}
 			}
         } catch (NumberFormatException e) {
