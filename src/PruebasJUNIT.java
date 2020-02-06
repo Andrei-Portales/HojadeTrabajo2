@@ -6,7 +6,7 @@ class PruebasJUNIT {
 
 	@Test
 	public void TestSum() {
-		String e = "2 3 +"; //el resultado de la expresión es 5
+		String e = "2 3 +"; //el resultado de la expresiï¿½n es 5
 		
 		//ejecuta la calculadora
 		ICalculator c = new Calculator();
@@ -14,12 +14,13 @@ class PruebasJUNIT {
 		c.doOperation();
 		
 		//se comprueba el resultado
-		assertEquals(c.getResult(),5);
+		
+		assertEquals(c.getResult(),"5.0");
 	}
 	
 	@Test
 	public void TestRes() {
-		String e = "7 3 -"; //el resultado de la expresión es 4
+		String e = "7 3 -"; //el resultado de la expresiï¿½n es 4
 		
 		//ejecuta la calculadora
 		ICalculator c = new Calculator();
@@ -27,12 +28,13 @@ class PruebasJUNIT {
 		c.doOperation();
 		
 		//se comprueba el resultado
-		assertEquals(c.getResult(),4);
+		
+		assertEquals(c.getResult(),"4.0");
 	}
 	
 	@Test
 	public void TestMul() {
-		String e = "4 3 *"; //el resultado de la expresión es 12
+		String e = "4 3 *"; //el resultado de la expresiï¿½n es 12
 		
 		//ejecuta la calculadora
 		ICalculator c = new Calculator();
@@ -40,12 +42,13 @@ class PruebasJUNIT {
 		c.doOperation();
 		
 		//se comprueba el resultado
-		assertEquals(c.getResult(),12);
+		
+		assertEquals(c.getResult(),"12.0");
 	}
 	
 	@Test
 	public void TestDiv() {
-		String e = "9 3 /"; //el resultado de la expresión es 3
+		String e = "9 3 /"; //el resultado de la expresiï¿½n es 3
 		
 		//ejecuta la calculadora
 		ICalculator c = new Calculator();
@@ -53,7 +56,8 @@ class PruebasJUNIT {
 		c.doOperation();
 		
 		//se comprueba el resultado
-		assertEquals(c.getResult(),3);
+		
+		assertEquals(c.getResult(),"3.0");
 	}
 
 }
