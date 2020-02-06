@@ -22,8 +22,9 @@ public class Main {
 	private JFrame frame;
 	//Se crea una pila
 	private IStack<String> expresion; 
-			//Se crea una calculadora
-	private ICalculator calculadora; 
+	//Se crea una calculadora
+	private ICalculadora calculadora; 
+	
 	private JScrollPane scrollPane;
 	private JTable tablaResultados;
 	private ArrayList<String> respuestas;
@@ -61,7 +62,7 @@ public class Main {
 		respuestas = new ArrayList<String>();
 		
 		expresion = new StackVector<String>();
-		calculadora = new Calculator();
+		calculadora = new Calculadora();
 		frame = new JFrame();
 		frame.getContentPane().setBackground(Color.WHITE);
 		frame.getContentPane().setLayout(new CardLayout(0, 0));
@@ -79,9 +80,9 @@ public class Main {
 					
 					
 					for (String j: cadena) {
-						calculadora.fillStack(j);
-						calculadora.doOperation();
-						respuestas.add(""+calculadora.getResult());
+						//calculadora.fillStack(j);
+						//calculadora.doOperation();
+						//respuestas.add(""+calculadora.getResult());
 						
 					}
 					
