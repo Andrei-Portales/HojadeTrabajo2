@@ -21,7 +21,7 @@ public class Main {
 
 	private JFrame frame;
 	//Se crea una pila
-	private IStack<String> expresion; 
+	private IStack<String> data_result; 
 	//Se crea una calculadora
 	private ICalculadora calculadora; 
 	
@@ -61,7 +61,7 @@ public class Main {
 		
 		respuestas = new ArrayList<String>();
 		
-		expresion = new StackVector<String>();
+		data_result = new StackVector<String>();
 		calculadora = new Calculadora();
 		frame = new JFrame();
 		frame.getContentPane().setBackground(Color.WHITE);
@@ -78,12 +78,10 @@ public class Main {
 				try {
 					cadena = ArchivoTXT.leerTXT(ArchivoTXT.getPath());
 					
-					
 					for (String j: cadena) {
 						//calculadora.fillStack(j);
-						//calculadora.doOperation();
-						//respuestas.add(""+calculadora.getResult());
-						
+						doOperation(j);
+						respuestas.add(""+getResult());
 					}
 					
 					JOptionPane.showMessageDialog(null, "Se leyo el archivo con exito");
@@ -92,6 +90,8 @@ public class Main {
 				}
 				
 			}
+
+			
 		});
 		btnElegirArchivo.setBounds(146, 35, 131, 29);
 		panel.add(btnElegirArchivo);
@@ -136,5 +136,90 @@ public class Main {
 		panel.add(lblResultados);
 		frame.setBounds(100, 100, 451, 374);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	}
+
+	protected String getResult() {
+		String result = "";
+		
+		if (data_result.size() == 1) {
+			result = data_result.pop();
+		}else 
+		{
+			result = "Error en la operación";
+		}
+			
+		return result;
+	}
+
+	protected void doOperation(String j) {
+		String[] entrada;
+		
+		entrada = j.split(" ");
+		
+		try {
+			for (int i = 0; i < entrada.length; i++ )
+			{
+				//¿es operador o numero?
+				if (isOperator(entrada[i])){
+					//si es operador se retiran dos elementos de la pila y se operan
+					int r = 0, n1= 0, n2 = 0; 
+					n1 = Integer.parseInt(data_result.pop());
+					n2 = Integer.parseInt(data_result.pop());
+					
+					switch(entrada[i]) {
+					case "+":
+						r= calculadora.sumar(n1, n2);
+						break;
+					case "-":
+						r= calculadora.restar(n1, n2);
+						break;
+					case "*":
+						r= calculadora.multiplicar(n1, n2);
+						break;
+					case "/":
+						r= calculadora.dividir(n1, n2);
+						break;
+					}
+					
+					//r = operation(entrada[i], n1, n2);
+					//se ingresa el resultado de la operación en la pila
+					data_result.push(Integer.toString(r));
+					
+				}else if (isNumeric(entrada[i])){
+					//si es un numero se ingresa a la pila
+					data_result.push(entrada[i]);
+				} else 
+				{ 	//se  limpia la pila
+					while (!(data_result.size() == 0)) {
+						data_result.pop();
+		            } 
+					
+				}
+			}
+        } catch (NumberFormatException e) {
+        	
+            while (!(data_result.size() == 0)) {
+            	data_result.pop();
+            }
+        }
+		
+	}
+	
+	private boolean isOperator(String op) {
+		if (op.equals("+") || op.equals("-") || op.equals("*") || op.equals("/") ) 
+			return true;
+		else 
+			return false;
+	}
+	
+	private boolean isNumeric(String op) {
+		boolean numeric = false;
+		try {
+			Double num = Double.parseDouble(op);
+			numeric = true;
+        } catch (NumberFormatException e) {
+            numeric = false;
+        }
+		return numeric;
 	}
 }

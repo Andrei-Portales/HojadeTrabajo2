@@ -26,7 +26,7 @@ public class Calculadora implements ICalculadora {
 	@Override
 	public int dividir(int a, int b) {
 		// TODO Auto-generated method stub
-		return a / b;
+		return b / a;
 	}
 	
 
